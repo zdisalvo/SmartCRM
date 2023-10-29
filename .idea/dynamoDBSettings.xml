@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DynamoDBConfiguration">
+    <option name="databaseConfigurations">
+      <map>
+        <entry key="005cc188-6cdf-4217-80dc-a62f414334bb">
+          <value>
+            <DatabaseConfigInternal>
+              <option name="id" value="005cc188-6cdf-4217-80dc-a62f414334bb" />
+              <option name="label" value="DynamoDB" />
+              <option name="region" value="US West (Oregon) us-west-2" />
+              <option name="version" value="2" />
+            </DatabaseConfigInternal>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="version" value="2" />
+  </component>
+</project>

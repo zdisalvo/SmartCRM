@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="LibrariesAndUtilities">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../Unit4/Sprint13/Module2/bd-working-with-databases-music-playlist-service-zdisalvo/LibrariesAndUtilities" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../Unit4/Sprint13/Module2/bd-working-with-databases-music-playlist-service-zdisalvo/LibrariesAndUtilities/ATACurriculumMusicPlaylistServiceTCTs/src" />
+      <root url="file://$PROJECT_DIR$/../../../Unit4/Sprint13/Module2/bd-working-with-databases-music-playlist-service-zdisalvo/LibrariesAndUtilities/ATACurriculumTestInfrastructure/src" />
+      <root url="file://$PROJECT_DIR$/../../../Unit4/Sprint13/Module2/bd-working-with-databases-music-playlist-service-zdisalvo/LibrariesAndUtilities/ATACurriculumTestInfrastructure/tst" />
+      <root url="file://$PROJECT_DIR$/../../../Unit4/Sprint13/Module2/bd-working-with-databases-music-playlist-service-zdisalvo/LibrariesAndUtilities/LessonPlanResources/src" />
+      <root url="file://$PROJECT_DIR$/../../../Unit4/Sprint13/Module2/bd-working-with-databases-music-playlist-service-zdisalvo/LibrariesAndUtilities/LessonPlanResources/tst" />
+      <root url="jar://$PROJECT_DIR$/../../../Unit4/Sprint13/Module2/bd-working-with-databases-music-playlist-service-zdisalvo/LibrariesAndUtilities/ATAResources.jar!/" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../../../Unit4/Sprint13/Module2/bd-working-with-databases-music-playlist-service-zdisalvo/LibrariesAndUtilities" recursive="false" />
+  </library>
+</component>
