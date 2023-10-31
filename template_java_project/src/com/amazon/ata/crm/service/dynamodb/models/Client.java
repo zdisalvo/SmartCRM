@@ -8,6 +8,7 @@ public class Client {
     private String phone;
     private String email;
     private String textBox;
+    private Integer clientId;
 
     public String getFirstName() {
         return firstName;

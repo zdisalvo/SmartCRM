@@ -1,8 +1,11 @@
 package com.amazon.ata.crm.service.activity;
 
 import com.amazon.ata.crm.service.dynamodb.ClientDao;
+import com.amazon.ata.crm.service.dynamodb.models.Client;
+import com.amazon.ata.crm.service.dynamodb.models.User;
 import com.amazon.ata.crm.service.models.requests.CreateClientRequest;
 import com.amazon.ata.crm.service.models.results.CreateClientResult;
+import com.amazon.ata.crm.service.util.CreateValidName;
 import com.amazonaws.Request;
 //import com.amazonaws.handlers.RequestHandler;
 
@@ -43,6 +46,12 @@ public class CreateClientActivity implements RequestHandler<CreateClientRequest,
 
     @Override
     public CreateClientResult handleRequest(final CreateClientRequest createClientRequest, Context context){
+        log.info("Received CreateClientRequest {}", createClientRequest);
+        Client client = new Client();
+
+        if (CreateValidName.isValidName(createClientRequest.getFirstName()) &&
+            CreateValidName.isValidName(createClientRequest.getLastName()))
+
         return null;
     }
 
