@@ -3,9 +3,12 @@ package com.amazon.ata.crm.service.activity;
 import com.amazon.ata.crm.service.dynamodb.ClientDao;
 import com.amazon.ata.crm.service.dynamodb.models.Client;
 import com.amazon.ata.crm.service.dynamodb.models.User;
+import com.amazon.ata.crm.service.exceptions.InvalidAttributeException;
 import com.amazon.ata.crm.service.models.requests.CreateClientRequest;
 import com.amazon.ata.crm.service.models.results.CreateClientResult;
+import com.amazon.ata.crm.service.util.CreateValidEmail;
 import com.amazon.ata.crm.service.util.CreateValidName;
+import com.amazon.ata.crm.service.util.CreateValidPhone;
 import com.amazonaws.Request;
 //import com.amazonaws.handlers.RequestHandler;
 
@@ -49,8 +52,27 @@ public class CreateClientActivity implements RequestHandler<CreateClientRequest,
         log.info("Received CreateClientRequest {}", createClientRequest);
         Client client = new Client();
 
+        client.setCompany(createClientRequest.getCompany());
+
         if (CreateValidName.isValidName(createClientRequest.getFirstName()) &&
-            CreateValidName.isValidName(createClientRequest.getLastName()))
+            CreateValidName.isValidName(createClientRequest.getLastName())) {
+            client.setFirstName(createClientRequest.getFirstName());
+            client.setLastName(createClientRequest.getLastName());
+        } else {
+            throw new InvalidAttributeException("Name entry was invalid, some characters were not allowed");
+        }
+
+        if (CreateValidPhone.isValidPhone(createClientRequest.getPhone())) {
+            client.setPhone(createClientRequest.getPhone());
+        } else {
+            throw new InvalidAttributeException("Invalid phone. Phone number must be exactly 10 digits");
+        }
+
+        if (CreateValidEmail.isValidEmail(createClientRequest.getEmail())) {
+            client.setEmail(createClientRequest.getEmail());
+        } else {
+            throw new InvalidAttributeException("Invalid email.");
+        }
 
         return null;
     }
