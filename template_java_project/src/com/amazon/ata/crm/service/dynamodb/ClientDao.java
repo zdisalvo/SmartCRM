@@ -13,6 +13,8 @@ import com.amazon.ata.crm.service.dynamodb.models.Client;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -52,24 +54,46 @@ public class ClientDao {
 
     public List<Client> getClientByAttributes(Map<String, AttributeValue> query) {
 
-        DynamoDBQueryExpression<Client> dynamoDBQueryExpression;
+
+        Client client = new Client();
+        client.setId("C819835");
+//
+//        // * NEW *
+//        Condition condition = new Condition();
+//        condition.withComparisonOperator(ComparisonOperator.EQ)
+//                .withAttributeValueList(new AttributeValue().withS("5")); //Set your search value here
+
+        DynamoDBQueryExpression<Client> queryExpression =
+                new DynamoDBQueryExpression<Client>()
+                        //.withHashKeyValues(client)
+                        .withFilterExpression("firstName = :zack")
+                        .withExpressionAttributeValues(query)// * NEW *
+                        .withLimit(20);
+
+        List<Client> queryResult = this.dynamoDBMapper.query(Client.class, queryExpression);
+
+        return queryResult;
 
 
-        String expString = "";
 
-        for (HashMap.Entry<String, AttributeValue> entry : query.entrySet()) {
-            expString += entry.getValue() + " ";
-        }
+//
+//        String expString = "";
+//
+//        for (HashMap.Entry<String, AttributeValue> entry : query.entrySet()) {
+//            expString += entry.getValue() + " ";
+//        }
+//
+//        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
+//                .withFilterExpression(expString).withExpressionAttributeValues(query);
+//
+//        List<Client> scanResult = this.dynamoDBMapper.parallelScan(Client.class, scanExpression, 20);
+//
+//
+//
+//        List<Client> clientList = new ArrayList<>();
 
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression()
-                .withFilterExpression(expString).withExpressionAttributeValues(query);
 
-        List<Client> scanResult = dynamoDBMapper.parallelScan(Client.class, scanExpression, 20);
-
-
-
-        List<Client> clientList = new ArrayList<>();
-
+        //TODO IGNORE
 //        Client client = this.dynamoDBMapper.load(Client.class, firstName);
 //
 //        if (client == null) {
@@ -81,8 +105,9 @@ public class ClientDao {
 //        while (client != null) {
 //            client = this.dynamoDBMapper.load(Client.class, firstName);
 //        }
+    //TODO
 
-        return scanResult;
+//        return scanResult;
     }
 
     public Client saveClient(Client client) {

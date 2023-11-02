@@ -44,23 +44,22 @@ public class GetClientActivity implements RequestHandler<GetClientRequest, GetCl
 
             String requestedFirstName = getClientRequest.getFirstName();
             if (requestedFirstName != null) {
-                query.put(requestedFirstName, new AttributeValue().withS("firstName"));
+                query.put(":" + requestedFirstName, new AttributeValue().withS("firstName"));
             }
 
             String requestedLastName = getClientRequest.getLastName();
             if (requestedLastName != null) {
-                query.put(requestedLastName, new AttributeValue().withS("lastName"));
+                query.put(":lastName", new AttributeValue().withS(requestedLastName));
             }
 
             String requestedCompany = getClientRequest.getCompany();
             if (requestedCompany != null) {
-                query.put(requestedCompany, new AttributeValue().withS("company"));
+                query.put(":company", new AttributeValue().withS(requestedCompany));
             }
 
             String requestedPhone = getClientRequest.getPhone();
             if (requestedPhone != null) {
-                CreateValidPhone.formatPhoneNumber(requestedPhone);
-                query.put(requestedPhone, new AttributeValue().withS("phone"));
+                query.put(":phone", new AttributeValue().withS(CreateValidPhone.formatPhoneNumber(requestedPhone)));
             }
 
             clientList = clientDao.getClientByAttributes(query);
