@@ -52,7 +52,7 @@ public class ClientDao {
         return client;
     }
 
-    public List<Client> getClientByAttributes(Map<String, AttributeValue> query) {
+    public List<Client> getClientByAttributes(Map<String, AttributeValue> query, String filterEx) {
 
 
         Client client = new Client();
@@ -63,14 +63,13 @@ public class ClientDao {
 //        condition.withComparisonOperator(ComparisonOperator.EQ)
 //                .withAttributeValueList(new AttributeValue().withS("5")); //Set your search value here
 
-        DynamoDBQueryExpression<Client> queryExpression =
-                new DynamoDBQueryExpression<Client>()
-                        //.withHashKeyValues(client)
-                        .withFilterExpression("firstName = :zack")
+        DynamoDBScanExpression scanExpression =
+                new DynamoDBScanExpression()
+                        .withFilterExpression(filterEx)
                         .withExpressionAttributeValues(query)// * NEW *
                         .withLimit(20);
 
-        List<Client> queryResult = this.dynamoDBMapper.query(Client.class, queryExpression);
+        List<Client> queryResult = this.dynamoDBMapper.scan(Client.class, scanExpression);
 
         return queryResult;
 

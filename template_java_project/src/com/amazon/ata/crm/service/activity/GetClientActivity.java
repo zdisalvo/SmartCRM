@@ -41,28 +41,61 @@ public class GetClientActivity implements RequestHandler<GetClientRequest, GetCl
             clientList.add(client);
         } else {
             Map<String, AttributeValue> query = new HashMap<>();
+            String filterEx = "";
+            int count = 0;
+
 
             String requestedFirstName = getClientRequest.getFirstName();
             if (requestedFirstName != null) {
-                query.put(":" + requestedFirstName, new AttributeValue().withS("firstName"));
+                requestedFirstName = requestedFirstName.toUpperCase();
+                query.put(":"+ requestedFirstName, new AttributeValue().withS(requestedFirstName));
+                if (count == 0) {
+                    filterEx += "first_name = :" + requestedFirstName;
+                    count++;
+                } else {
+                    filterEx += " and first_name = :" + requestedFirstName;
+                }
             }
 
             String requestedLastName = getClientRequest.getLastName();
             if (requestedLastName != null) {
-                query.put(":lastName", new AttributeValue().withS(requestedLastName));
+                requestedLastName = requestedLastName.toUpperCase();
+                query.put(":" + requestedLastName, new AttributeValue().withS(requestedLastName));
+                if (count == 0) {
+                    filterEx += "last_name = :" + requestedLastName;
+                    count++;
+                } else {
+                    filterEx += " and last_name = :" + requestedLastName;
+                }
             }
 
             String requestedCompany = getClientRequest.getCompany();
             if (requestedCompany != null) {
-                query.put(":company", new AttributeValue().withS(requestedCompany));
+                requestedCompany = requestedCompany.toUpperCase();
+                query.put(":" + requestedCompany, new AttributeValue().withS(requestedCompany));
+                if (count == 0) {
+                    filterEx += "company = :" + requestedCompany;
+                    count++;
+                } else {
+                    filterEx += " and company = :" + requestedCompany;
+                }
             }
 
             String requestedPhone = getClientRequest.getPhone();
             if (requestedPhone != null) {
-                query.put(":phone", new AttributeValue().withS(CreateValidPhone.formatPhoneNumber(requestedPhone)));
+                String phone = CreateValidPhone.formatPhoneNumber(requestedPhone);
+                query.put(":" + phone, new AttributeValue().withS(phone));
+                if (count == 0) {
+                    filterEx += "phone = :" + phone;
+                    count++;
+                } else {
+                    filterEx += " and phone = :" + phone;
+                }
+
             }
 
-            clientList = clientDao.getClientByAttributes(query);
+
+            clientList = clientDao.getClientByAttributes(query, filterEx);
         }
 
         List<ClientModel> clientModelList = new ArrayList<>();

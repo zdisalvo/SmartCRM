@@ -59,13 +59,13 @@ public class CreateClientActivity implements RequestHandler<CreateClientRequest,
         Client client = new Client();
 
         if (createClientRequest.getCompany() != null) {
-            client.setCompany(createClientRequest.getCompany());
+            client.setCompany(createClientRequest.getCompany().toUpperCase());
         }
 
         if (CreateValidName.isValidName(createClientRequest.getFirstName()) &&
             CreateValidName.isValidName(createClientRequest.getLastName())) {
-            client.setFirstName(createClientRequest.getFirstName());
-            client.setLastName(createClientRequest.getLastName());
+            client.setFirstName(createClientRequest.getFirstName().toUpperCase());
+            client.setLastName(createClientRequest.getLastName().toUpperCase());
         } else {
             throw new InvalidAttributeException("Name entry was invalid, only letters, spaces, dashes, and " +
                     "hyphens are allowed. You entered: " +
@@ -82,7 +82,7 @@ public class CreateClientActivity implements RequestHandler<CreateClientRequest,
         }
 
         if (CreateValidEmail.isValidEmail(createClientRequest.getEmail())) {
-            client.setEmail(createClientRequest.getEmail());
+            client.setEmail(createClientRequest.getEmail().toUpperCase());
         } else {
             throw new InvalidAttributeException("Invalid email. You entered: " + createClientRequest.getEmail());
         }
