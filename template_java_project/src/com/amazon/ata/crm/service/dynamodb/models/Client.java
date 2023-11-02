@@ -32,7 +32,7 @@ public class Client {
         this.firstName = firstName;
     }
 
-    @DynamoDBHashKey(attributeName = "last_name")
+    @DynamoDBAttribute(attributeName = "last_name")
     public String getLastName() {
         return lastName;
     }
@@ -51,7 +51,7 @@ public class Client {
         this.company = company;
     }
 
-    @DynamoDBHashKey(attributeName = "phone")
+    @DynamoDBAttribute(attributeName = "phone")
     public String getPhone() {
         return phone;
     }

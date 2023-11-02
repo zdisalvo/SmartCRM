@@ -1,6 +1,7 @@
 package com.amazon.ata.crm.service.lambda;
 
 import com.amazon.ata.crm.service.activity.CreateClientActivity;
+//import com.amazon.ata.crm.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.crm.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.crm.service.dependency.ServiceComponent;
 import com.amazon.ata.crm.service.models.requests.CreateClientRequest;
@@ -20,8 +21,8 @@ public class CreateClientActivityProvider implements RequestHandler<CreateClient
     }
 
     @Override
-    public CreateClientResult handleRequest(final CreateClientRequest createPlaylistRequest, Context context) {
-        return getDagger().handleRequest(createPlaylistRequest, context);
+    public CreateClientResult handleRequest(final CreateClientRequest createClientRequest, Context context) {
+        return getDagger().handleRequest(createClientRequest, context);
     }
 
 //    private App getApp() {

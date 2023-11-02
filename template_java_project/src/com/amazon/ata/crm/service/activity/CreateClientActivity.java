@@ -37,15 +37,18 @@ import org.apache.commons.logging.Log;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import javax.inject.Inject;
+
 public class CreateClientActivity implements RequestHandler<CreateClientRequest, CreateClientResult> {
 
 
-    //TODO - need to import apache loggin or find name for logger
+
     private final Logger log = LogManager.getLogger();
 
     private final ClientDao clientDao;
 
 
+    @Inject
     public CreateClientActivity(ClientDao clientDao) {
         this.clientDao = clientDao;
     }
@@ -55,26 +58,33 @@ public class CreateClientActivity implements RequestHandler<CreateClientRequest,
         log.info("Received CreateClientRequest {}", createClientRequest);
         Client client = new Client();
 
-        client.setCompany(createClientRequest.getCompany());
+        if (createClientRequest.getCompany() != null) {
+            client.setCompany(createClientRequest.getCompany());
+        }
 
         if (CreateValidName.isValidName(createClientRequest.getFirstName()) &&
             CreateValidName.isValidName(createClientRequest.getLastName())) {
             client.setFirstName(createClientRequest.getFirstName());
             client.setLastName(createClientRequest.getLastName());
         } else {
-            throw new InvalidAttributeException("Name entry was invalid, some characters were not allowed");
+            throw new InvalidAttributeException("Name entry was invalid, only letters, spaces, dashes, and " +
+                    "hyphens are allowed. You entered: " +
+                    createClientRequest.getFirstName() + " " + createClientRequest.getLastName());
         }
 
         if (CreateValidPhone.isValidPhone(createClientRequest.getPhone())) {
-            client.setPhone(createClientRequest.getPhone());
+            String phone = CreateValidPhone.formatPhoneNumber(createClientRequest.getPhone());
+
+            client.setPhone(phone);
         } else {
-            throw new InvalidAttributeException("Invalid phone. Phone number must be exactly 10 digits");
+            throw new InvalidAttributeException("Invalid phone. Phone number must be 10 digits with a maximum" +
+                    "6 digit extension. You entered: " + createClientRequest.getPhone());
         }
 
         if (CreateValidEmail.isValidEmail(createClientRequest.getEmail())) {
             client.setEmail(createClientRequest.getEmail());
         } else {
-            throw new InvalidAttributeException("Invalid email.");
+            throw new InvalidAttributeException("Invalid email. You entered: " + createClientRequest.getEmail());
         }
 
         String clientId = GenerateId.generateClientId();

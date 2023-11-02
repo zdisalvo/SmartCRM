@@ -39,7 +39,7 @@ public class CreateClientRequest {
         this.company = builder.company;
         this.phone = builder.phone;
         this.email = builder.email;
-        this.textBox = builder.textbox;
+        this.textBox = builder.textBox;
     }
 
     public String getId() {
@@ -113,7 +113,7 @@ public class CreateClientRequest {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFirstName(), getLastName(), getCompany(), getPhone(), getEmail());
+        return Objects.hash(firstName, lastName, company, phone, email);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class CreateClientRequest {
         private String company;
         private String phone;
         private String email;
-        private String textbox;
+        private String textBox;
 
         private Builder() {
 
@@ -174,7 +174,7 @@ public class CreateClientRequest {
         }
 
         public Builder withTextBox (String textBoxToUse) {
-            this.textbox = textBoxToUse;
+            this.textBox = textBoxToUse;
             return this;
         }
 
