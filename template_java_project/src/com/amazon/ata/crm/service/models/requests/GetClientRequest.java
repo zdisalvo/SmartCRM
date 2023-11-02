@@ -120,6 +120,11 @@ public class GetClientRequest {
             return this;
         }
 
+        public Builder withPhone(String phoneToUse) {
+            this.phone = phoneToUse;
+            return this;
+        }
+
         public GetClientRequest build() { return new GetClientRequest(this); }
     }
 }

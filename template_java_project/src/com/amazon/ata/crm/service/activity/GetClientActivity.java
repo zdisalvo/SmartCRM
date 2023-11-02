@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +34,11 @@ public class GetClientActivity implements RequestHandler<GetClientRequest, GetCl
         log.info("Received GetClientRequest {}", getClientRequest);
         String requestedId = getClientRequest.getId();
         Client client = null;
+        List<Client> clientList = new ArrayList<>();
+
         if (requestedId != null) {
             client = clientDao.getClientById(requestedId);
+            clientList.add(client);
         } else {
             Map<String, AttributeValue> query = new HashMap<>();
 
@@ -59,17 +63,23 @@ public class GetClientActivity implements RequestHandler<GetClientRequest, GetCl
                 query.put(requestedPhone, new AttributeValue().withS("phone"));
             }
 
-            List<Client> clientList = clientDao.getClientByAttributes(query);
+            clientList = clientDao.getClientByAttributes(query);
+        }
+
+        List<ClientModel> clientModelList = new ArrayList<>();
+        ClientModel clientModel;
+
+        for (Client client1 : clientList) {
+            clientModel = new ModelConverter().toClientModel(client1);
+            clientModelList.add(clientModel);
         }
 
 
-        ClientModel clientModel = new ModelConverter().toClientModel(client);
-
         return GetClientResult.builder()
-                .withClient(clientModel)
+                .withClient(clientModelList)
                 .build();
 
-        for()
+
     }
 
 }
