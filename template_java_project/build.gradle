@@ -51,6 +51,9 @@ dependencies {
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
     implementation group: 'com.google.dagger', name: 'dagger', version: '2.15'
 
+    //implementation(platform("software.amazon.awssdk:bom:<VERSION>"))
+    //implementation 'software.amazon.awssdk:dynamodb-enhanced'
+
     implementation "com.google.dagger:dagger:2.15"
     annotationProcessor"com.google.dagger:dagger-compiler:2.15"
 
@@ -61,6 +64,19 @@ dependencies {
 
 //    // https://mvnrepository.com/artifact/software.amazon.awssdk/dynamodbmapper-v1
 //    implementation 'software.amazon.awssdk:dynamodbmapper-v1:2.0.0-preview-3'
+
+
+    implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.10.45'
+    implementation 'com.github.derjust:spring-data-dynamodb:4.2.0'
+    //https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb
+
+    //implementation 'com.amazonaws:aws-java-sdk-dynamodb:1.9.0'
+    //implementation 'org.apache.beam.sdk.io.aws2.dynamodb'
+    // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.9.0'
+
+
+
 
 
 
@@ -78,7 +94,7 @@ dependencies {
     // Added for using log4j usage
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
-    //implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
 }
 

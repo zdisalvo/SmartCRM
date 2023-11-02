@@ -1,15 +1,29 @@
 package com.amazon.ata.crm.service.dynamodb.models;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+
+@DynamoDBTable(tableName = "clients")
 public class Client {
 
+    private String id;
     private String firstName;
     private String lastName;
     private String company;
     private String phone;
     private String email;
     private String textBox;
-    private Integer clientId;
 
+
+    @DynamoDBHashKey(attributeName = "id")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @DynamoDBHashKey(attributeName = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -18,6 +32,7 @@ public class Client {
         this.firstName = firstName;
     }
 
+    @DynamoDBHashKey(attributeName = "last_name")
     public String getLastName() {
         return lastName;
     }
@@ -26,14 +41,17 @@ public class Client {
         this.lastName = lastName;
     }
 
+    @DynamoDBAttribute(attributeName = "company")
     public String getCompany() {
         return company;
     }
+
 
     public void setCompany(String company) {
         this.company = company;
     }
 
+    @DynamoDBHashKey(attributeName = "phone")
     public String getPhone() {
         return phone;
     }
@@ -42,6 +60,7 @@ public class Client {
         this.phone = phone;
     }
 
+    @DynamoDBAttribute(attributeName = "email")
     public String getEmail() {
         return email;
     }
@@ -50,6 +69,7 @@ public class Client {
         this.email = email;
     }
 
+    @DynamoDBAttribute(attributeName = "text_box")
     public String getTextBox() {
         return textBox;
     }

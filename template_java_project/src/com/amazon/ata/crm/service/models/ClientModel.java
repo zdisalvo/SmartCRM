@@ -1,14 +1,10 @@
-package com.amazon.ata.crm.service.models.requests;
+package com.amazon.ata.crm.service.models;
 
-import com.amazon.ata.crm.service.util.CreateValidName;
+import com.amazon.ata.crm.service.models.requests.CreateClientRequest;
 
-
-
-import java.util.Locale;
 import java.util.Objects;
-import java.util.Set;
 
-public class CreateClientRequest {
+public class ClientModel {
 
     private String id;
     private String firstName;
@@ -18,28 +14,16 @@ public class CreateClientRequest {
     private String email;
     private String textBox;
 
-    public CreateClientRequest(String id, String firstName, String lastName,
-                               String company, String phone, String email, String textBox) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.company = company;
-        this.phone = phone;
-        this.email = email;
-        this.textBox = textBox;
-    }
+    public ClientModel() {}
 
-    public CreateClientRequest() {
-    }
-
-    public CreateClientRequest(Builder builder) {
+    public ClientModel(Builder builder){
         this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.company = builder.company;
         this.phone = builder.phone;
         this.email = builder.email;
-        this.textBox = builder.textbox;
+        this.textBox = builder.textBox;
     }
 
     public String getId() {
@@ -101,47 +85,40 @@ public class CreateClientRequest {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || o.getClass() != CreateClientRequest.class) return false;
-        CreateClientRequest that = (CreateClientRequest) o;
-        return  Objects.equals(getId(), that.getId()) &&
-                Objects.equals(getFirstName(), that.getFirstName()) &&
-                Objects.equals(getLastName(), that.getLastName()) &&
-                Objects.equals(getCompany(), that.getCompany()) &&
-                Objects.equals(getPhone(), that.getPhone()) &&
-                Objects.equals(getEmail(), that.getEmail());
+        if (!(o instanceof ClientModel)) return false;
+        ClientModel that = (ClientModel) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getFirstName(), that.getFirstName()) && Objects.equals(getLastName(), that.getLastName()) && Objects.equals(getCompany(), that.getCompany()) && Objects.equals(getPhone(), that.getPhone()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTextBox(), that.getTextBox());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFirstName(), getLastName(), getCompany(), getPhone(), getEmail());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getCompany(), getPhone(), getEmail(), getTextBox());
     }
 
     @Override
     public String toString() {
-        return "CreateClientRequest{" +
+        return "ClientModel{" +
                 "id='" + id + '\'' +
-                "firstName='" + firstName + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", company='" + company + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
+                ", textBox='" + textBox + '\'' +
                 '}';
     }
 
     public static Builder builder() {return new Builder();}
 
     public static final class Builder {
+
         private String id;
         private String firstName;
         private String lastName;
         private String company;
         private String phone;
         private String email;
-        private String textbox;
-
-        private Builder() {
-
-        }
+        private String textBox;
 
         public Builder withId (String idToUse) {
             this.id = idToUse;
@@ -174,10 +151,11 @@ public class CreateClientRequest {
         }
 
         public Builder withTextBox (String textBoxToUse) {
-            this.textbox = textBoxToUse;
+            this.textBox = textBoxToUse;
             return this;
         }
 
-        public CreateClientRequest build() {return new CreateClientRequest(this);}
+        public ClientModel build() {return new ClientModel(this);}
+
     }
 }

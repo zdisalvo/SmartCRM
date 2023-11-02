@@ -1,14 +1,17 @@
 package com.amazon.ata.crm.service.activity;
 
+import com.amazon.ata.crm.service.converters.ModelConverter;
 import com.amazon.ata.crm.service.dynamodb.ClientDao;
 import com.amazon.ata.crm.service.dynamodb.models.Client;
 import com.amazon.ata.crm.service.dynamodb.models.User;
 import com.amazon.ata.crm.service.exceptions.InvalidAttributeException;
+import com.amazon.ata.crm.service.models.ClientModel;
 import com.amazon.ata.crm.service.models.requests.CreateClientRequest;
 import com.amazon.ata.crm.service.models.results.CreateClientResult;
 import com.amazon.ata.crm.service.util.CreateValidEmail;
 import com.amazon.ata.crm.service.util.CreateValidName;
 import com.amazon.ata.crm.service.util.CreateValidPhone;
+import com.amazon.ata.crm.service.util.GenerateId;
 import com.amazonaws.Request;
 //import com.amazonaws.handlers.RequestHandler;
 
@@ -74,7 +77,18 @@ public class CreateClientActivity implements RequestHandler<CreateClientRequest,
             throw new InvalidAttributeException("Invalid email.");
         }
 
-        return null;
+        String clientId = GenerateId.generateClientId();
+        client.setId(clientId);
+
+        client.setTextBox("");
+
+        ClientModel clientModel = new ModelConverter().toClientModel(client);
+
+        clientDao.saveClient(client);
+
+        return CreateClientResult.builder()
+                .withClient(clientModel)
+                .build();
     }
 
 
