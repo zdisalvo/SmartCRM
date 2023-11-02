@@ -23,7 +23,7 @@ public class Client {
         this.id = id;
     }
 
-    @DynamoDBHashKey(attributeName = "first_name")
+    @DynamoDBAttribute(attributeName = "first_name")
     public String getFirstName() {
         return firstName;
     }
