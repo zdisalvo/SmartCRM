@@ -46,11 +46,11 @@ public class CreateValidPhone {
                 p++;
                 d++;
             } else if (i == p) {
-                formattedPhone += "(" + rawNumbers.charAt(i);
+                formattedPhone += rawNumbers.charAt(i);
             } else if (i == p + 2) {
-                formattedPhone += rawNumbers.charAt(i) + ") ";
+                formattedPhone += rawNumbers.charAt(i) + " ";
             } else if (i == d) {
-                formattedPhone += "-" + rawNumbers.charAt(i);
+                formattedPhone += " " + rawNumbers.charAt(i);
             } else if (i == p + 10) {
                 formattedPhone += " x" + rawNumbers.charAt(i);
             } else {
