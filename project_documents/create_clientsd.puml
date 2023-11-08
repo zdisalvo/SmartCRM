@@ -1,0 +1,14 @@
+@startuml
+
+title Create Client
+
+actor NewUser as "New User"
+participant Website as "Website Create Client Page"
+participant CreateClientActivity
+database clients
+
+NewUser -> Website: Submit create client form
+Website -> CreateClientActivity: Send create client request
+CreateClientActivity -> clients: Save new client
+
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+
+title Update Client
+
+actor NewUser as "New User"
+participant Website as "Website Update Client Page"
+participant UpdateClientActivity
+database clients
+
+NewUser -> Website: Submit update client form
+Website -> UpdateClientActivity: Send update client request
+UpdateClientActivity -> clients: save updates
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+
+title Get Client
+
+actor NewUser as "New User"
+participant Website as "Website Get Client Page"
+participant GetClientActivity
+participant GetClientResult
+database clients
+
+NewUser -> Website: Submit get client form
+Website -> GetClientActivity: Send get client request
+GetClientActivity -> clients: find client in database
+
+clients --> NewUser: return 200 response with Client data
+
+alt if Client does not exist
+clients --> NewUser: return 400 response with Client does not exist
+
+
+@enduml
