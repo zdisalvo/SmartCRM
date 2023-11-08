@@ -2,7 +2,7 @@
 
 ## 1. Problem Statement 
 
-A CRM - Customer Retention Manager, is an open interactive database that allows sales teams and customer facing entities to track their relationships and interactions with customers and prospects. The goal is to maximize efficiency for customer capture rate by giving the user tools to know when to call and email, what was talked about last, and where the relationship is in the pipeline. Most CRM’s are useful and effective but are highly complex and require an involved learning curve for the user to acquire the competence to utilize the dozens of features and nuances. The goal with this CRM is simplicity, limiting the ranges of steps and leaving more up to automation to get the job done.
+A CRM - Customer Relationship Manager, is an open interactive database that allows sales teams and customer facing entities to track their relationships and interactions with customers and prospects. The goal is to maximize efficiency for customer capture rate by giving the user tools to know when to call and email, what was talked about last, and where the relationship is in the pipeline. Most CRM’s are useful and effective but are highly complex and require an involved learning curve for the user to acquire the competence to utilize the dozens of features and nuances. The goal with this CRM is simplicity, limiting the ranges of steps and leaving more up to automation to get the job done.
 
 ## 2. Top Questions to Resolve in Review
 
@@ -183,4 +183,17 @@ company // string
 phone // string
 email // string
 ```
+
+![Home Page](HomePage.png)
+
+![Create User Page](CreateUserPage.png)
+
+![Create Client Page](CreateClientPage.png)
+
+![Get Client Page](GetClientPage.png)
+
+![Client Interface](ClientInterface.png)
+
+![Individual Client Page](IndividualClientPage.png)
+
 
