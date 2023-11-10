@@ -23,13 +23,6 @@ public class GetClientActivityProvider implements RequestHandler<GetClientReques
         return getDagger().handleRequest(getClientRequest, context);
     }
 
-//    private App getApp() {
-//        if (app == null) {
-//            app = new App();
-//        }
-//
-//        return app;
-//    }
 
     private GetClientActivity getDagger() {
         ServiceComponent dagger = DaggerServiceComponent.create();

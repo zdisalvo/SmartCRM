@@ -2,6 +2,7 @@ package com.amazon.ata.crm.service.models;
 
 import com.amazon.ata.crm.service.dynamodb.models.LogNote;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ public class ClientModel {
     private String phone;
     private String email;
     private String textBox;
-    private List<LogNote> logNotes;
+    private List<LogNote> logNotes = new ArrayList<>();
 
     public ClientModel() {}
 
@@ -130,7 +131,7 @@ public class ClientModel {
         private String phone;
         private String email;
         private String textBox;
-        private List<LogNote> logNotes;
+        private List<LogNote> logNotes = new ArrayList<>();
 
         public Builder withId (String idToUse) {
             this.id = idToUse;

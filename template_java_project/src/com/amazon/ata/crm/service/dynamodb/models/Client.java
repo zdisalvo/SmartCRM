@@ -2,6 +2,7 @@ package com.amazon.ata.crm.service.dynamodb.models;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DynamoDBTable(tableName = "clients")
@@ -14,7 +15,7 @@ public class Client {
     private String phone;
     private String email;
     private String textBox;
-    private List<LogNote> logNotes;
+    private List<LogNote> logNotes = new ArrayList<>();
 
 
     @DynamoDBHashKey(attributeName = "id")
@@ -81,6 +82,7 @@ public class Client {
         this.textBox = textBox;
     }
 
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.L)
     @DynamoDBAttribute(attributeName = "log_notes")
     public List<LogNote> getLogNotes() {
         return logNotes;

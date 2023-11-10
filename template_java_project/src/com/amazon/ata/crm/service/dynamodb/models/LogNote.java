@@ -1,12 +1,12 @@
 package com.amazon.ata.crm.service.dynamodb.models;
 
 import com.amazon.ata.crm.service.models.Action;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import org.joda.time.DateTime;
 
 import java.time.LocalDateTime;
 
+@DynamoDBTable(tableName = "log_notes")
 public class LogNote {
 
     private String clientId;
@@ -14,7 +14,7 @@ public class LogNote {
     private String note;
     private LocalDateTime noteDateTime;
 
-    @DynamoDBHashKey(attributeName = "client_id")
+    @DynamoDBHashKey(attributeName = "clientId")
     public String getClientId() {
         return clientId;
     }
@@ -23,6 +23,7 @@ public class LogNote {
         this.clientId = clientId;
     }
 
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.S)
     @DynamoDBAttribute(attributeName = "action")
     public Action getAction() {
         return action;
@@ -41,6 +42,7 @@ public class LogNote {
         this.note = note;
     }
 
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.S)
     @DynamoDBAttribute(attributeName = "note_date_time")
     public LocalDateTime getNoteDateTime() {
         return noteDateTime;

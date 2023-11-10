@@ -25,13 +25,6 @@ public class CreateClientActivityProvider implements RequestHandler<CreateClient
         return getDagger().handleRequest(createClientRequest, context);
     }
 
-//    private App getApp() {
-//        if (app == null) {
-//            app = new App();
-//        }
-//
-//        return app;
-//    }
 
     private CreateClientActivity getDagger() {
         ServiceComponent dagger = DaggerServiceComponent.create();
