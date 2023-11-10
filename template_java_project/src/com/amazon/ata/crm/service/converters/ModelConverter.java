@@ -16,6 +16,7 @@ public class ModelConverter {
             .withPhone(client.getPhone())
             .withEmail(client.getEmail())
             .withTextBox(client.getTextBox())
+            .withLogNotes(client.getLogNotes())
             .build();
     }
 }

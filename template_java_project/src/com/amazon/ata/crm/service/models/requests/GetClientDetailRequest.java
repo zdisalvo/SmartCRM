@@ -1,30 +1,30 @@
-package com.amazon.ata.crm.service.models;
+package com.amazon.ata.crm.service.models.requests;
 
 import com.amazon.ata.crm.service.dynamodb.models.LogNote;
 
 import java.util.List;
 import java.util.Objects;
 
-public class ClientModel {
-
+public class GetClientDetailRequest {
     private String id;
     private String firstName;
     private String lastName;
     private String company;
     private String phone;
-    private String email;
     private String textBox;
     private List<LogNote> logNotes;
 
-    public ClientModel() {}
+    public GetClientDetailRequest() {
 
-    public ClientModel(Builder builder){
+    }
+
+    public GetClientDetailRequest(Builder builder) {
+
         this.id = builder.id;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.company = builder.company;
         this.phone = builder.phone;
-        this.email = builder.email;
         this.textBox = builder.textBox;
         this.logNotes = builder.logNotes;
     }
@@ -69,14 +69,6 @@ public class ClientModel {
         this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getTextBox() {
         return textBox;
     }
@@ -96,83 +88,78 @@ public class ClientModel {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ClientModel)) return false;
-        ClientModel that = (ClientModel) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getFirstName(), that.getFirstName()) && Objects.equals(getLastName(), that.getLastName()) && Objects.equals(getCompany(), that.getCompany()) && Objects.equals(getPhone(), that.getPhone()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getTextBox(), that.getTextBox());
+        if (!(o instanceof GetClientDetailRequest)) return false;
+        GetClientDetailRequest that = (GetClientDetailRequest) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getFirstName(), that.getFirstName()) && Objects.equals(getLastName(), that.getLastName()) && Objects.equals(getCompany(), that.getCompany()) && Objects.equals(getPhone(), that.getPhone());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getCompany(), getPhone(), getEmail(), getTextBox());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getCompany(), getPhone());
     }
 
     @Override
     public String toString() {
-        return "ClientModel{" +
+        return "GetClientRequest{" +
                 "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", company='" + company + '\'' +
                 ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", textBox='" + textBox + '\'' +
                 '}';
     }
 
-    public static Builder builder() {return new Builder();}
+    public static Builder builder() { return new Builder(); }
 
     public static final class Builder {
-
         private String id;
         private String firstName;
         private String lastName;
         private String company;
         private String phone;
-        private String email;
         private String textBox;
         private List<LogNote> logNotes;
 
-        public Builder withId (String idToUse) {
+
+        private Builder() {
+
+        }
+
+        public Builder withId(String idToUse) {
             this.id = idToUse;
             return this;
         }
 
-        public Builder withFirstName (String firstNameToUse) {
+        public Builder withFirstName(String firstNameToUse) {
             this.firstName = firstNameToUse;
             return this;
         }
 
-        public Builder withLastName (String lastNameToUse) {
+        public Builder withLastName(String lastNameToUse) {
             this.lastName = lastNameToUse;
             return this;
         }
 
-        public Builder withCompany (String companyToUse) {
+        public Builder withCompany(String companyToUse) {
             this.company = companyToUse;
             return this;
         }
 
-        public Builder withPhone (String phoneToUse) {
+        public Builder withPhone(String phoneToUse) {
             this.phone = phoneToUse;
             return this;
         }
 
-        public Builder withEmail (String emailToUse) {
-            this.email = emailToUse;
-            return this;
-        }
-
-        public Builder withTextBox (String textBoxToUse) {
+        public Builder withTextBox(String textBoxToUse) {
             this.textBox = textBoxToUse;
             return this;
         }
 
-        public Builder withLogNotes (List<LogNote> logNotesToUse) {
+        public Builder withLogNotes(List<LogNote> logNotesToUse) {
             this.logNotes = logNotesToUse;
             return this;
         }
 
-        public ClientModel build() {return new ClientModel(this);}
-
+        public GetClientDetailRequest build() { return new GetClientDetailRequest(this); }
     }
 }
