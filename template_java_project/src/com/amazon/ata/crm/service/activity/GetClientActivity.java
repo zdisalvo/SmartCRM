@@ -46,7 +46,7 @@ public class GetClientActivity implements RequestHandler<GetClientRequest, GetCl
 
 
             String requestedFirstName = getClientRequest.getFirstName();
-            if (requestedFirstName != null) {
+            if (requestedFirstName != null && !requestedFirstName.equals("null")) {
                 requestedFirstName = requestedFirstName.toUpperCase();
                 query.put(":"+ requestedFirstName, new AttributeValue().withS(requestedFirstName));
                 if (count == 0) {
@@ -58,7 +58,7 @@ public class GetClientActivity implements RequestHandler<GetClientRequest, GetCl
             }
 
             String requestedLastName = getClientRequest.getLastName();
-            if (requestedLastName != null) {
+            if (requestedLastName != null && !requestedLastName.equals("null")) {
                 requestedLastName = requestedLastName.toUpperCase();
                 query.put(":" + requestedLastName, new AttributeValue().withS(requestedLastName));
                 if (count == 0) {
@@ -70,7 +70,7 @@ public class GetClientActivity implements RequestHandler<GetClientRequest, GetCl
             }
 
             String requestedCompany = getClientRequest.getCompany();
-            if (requestedCompany != null) {
+            if (requestedCompany != null && !requestedCompany.equals("null")) {
                 requestedCompany = requestedCompany.toUpperCase();
                 query.put(":" + requestedCompany, new AttributeValue().withS(requestedCompany));
                 if (count == 0) {
