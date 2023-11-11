@@ -12,7 +12,8 @@ public class LogNote {
     private String clientId;
     private Action action;
     private String note;
-    private LocalDateTime noteDateTime;
+    private String date;
+    private String time;
 
     public LogNote() {
     }
@@ -45,13 +46,22 @@ public class LogNote {
         this.note = note;
     }
 
-    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.S)
-    @DynamoDBAttribute(attributeName = "note_date_time")
-    public LocalDateTime getNoteDateTime() {
-        return noteDateTime;
+
+    @DynamoDBAttribute(attributeName = "date")
+    public String getDate() {
+        return date;
     }
 
-    public void setNoteDateTime(LocalDateTime noteDateTime) {
-        this.noteDateTime = noteDateTime;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    @DynamoDBAttribute(attributeName = "time")
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

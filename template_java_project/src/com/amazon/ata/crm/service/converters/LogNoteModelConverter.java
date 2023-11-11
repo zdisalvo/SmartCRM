@@ -13,7 +13,8 @@ public class LogNoteModelConverter {
                     .withClientId(logNote.getClientId())
                     .withAction(logNote.getAction())
                     .withNote(logNote.getNote())
-                    .withNoteDateTime(logNote.getNoteDateTime())
+                    .withDate(logNote.getDate())
+                    .withTime(logNote.getTime())
                     .build();
         }
 

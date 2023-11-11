@@ -10,13 +10,15 @@ public class LogNoteModel {
     private String clientId;
     private Action action;
     private String note;
-    private LocalDateTime noteDateTime;
+    private String date;
+    private String time;
 
-    public LogNoteModel(String clientId, Action action, String note, LocalDateTime noteDateTime) {
+    public LogNoteModel(String clientId, Action action, String note, String date, String time) {
         this.clientId = clientId;
         this.action = action;
         this.note = note;
-        this.noteDateTime = noteDateTime;
+        this.date = date;
+        this.time = time;
     }
 
     public LogNoteModel() {
@@ -26,7 +28,8 @@ public class LogNoteModel {
         this.clientId = builder.clientId;
         this.action = builder.action;
         this.note = builder.note;
-        this.noteDateTime = builder.noteDateTime;
+        this.date = builder.date;
+        this.time = builder.time;
     }
 
     public String getClientId() {
@@ -53,12 +56,20 @@ public class LogNoteModel {
         this.note = note;
     }
 
-    public LocalDateTime getNoteDateTime() {
-        return noteDateTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setNoteDateTime(LocalDateTime noteDateTime) {
-        this.noteDateTime = noteDateTime;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     @Override
@@ -66,12 +77,12 @@ public class LogNoteModel {
         if (this == o) return true;
         if (!(o instanceof LogNoteModel)) return false;
         LogNoteModel that = (LogNoteModel) o;
-        return Objects.equals(getClientId(), that.getClientId()) && getAction() == that.getAction() && Objects.equals(getNote(), that.getNote()) && Objects.equals(getNoteDateTime(), that.getNoteDateTime());
+        return Objects.equals(getClientId(), that.getClientId()) && getAction() == that.getAction() && Objects.equals(getNote(), that.getNote()) && Objects.equals(getDate(), that.getDate()) && Objects.equals(getTime(), that.getTime());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getClientId(), getAction(), getNote(), getNoteDateTime());
+        return Objects.hash(getClientId(), getAction(), getNote(), getDate(), getTime());
     }
 
     @Override
@@ -80,7 +91,8 @@ public class LogNoteModel {
                 "clientId='" + clientId + '\'' +
                 ", action=" + action +
                 ", note='" + note + '\'' +
-                ", noteDateTime=" + noteDateTime +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
                 '}';
     }
 
@@ -91,7 +103,8 @@ public class LogNoteModel {
         private String clientId;
         private Action action;
         private String note;
-        private LocalDateTime noteDateTime;
+        private String date;
+        private String time;
 
 
         private Builder() {
@@ -112,8 +125,13 @@ public class LogNoteModel {
             return this;
         }
 
-        public Builder withNoteDateTime(LocalDateTime noteDateTimeToUse) {
-            this.noteDateTime = LocalDateTime.now();
+        public Builder withDate(String dateToUse) {
+            this.date = dateToUse;
+            return this;
+        }
+
+        public Builder withTime(String timeToUse) {
+            this.time = timeToUse;
             return this;
         }
 

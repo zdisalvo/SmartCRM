@@ -18,6 +18,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 public class UpdateClientActivity implements RequestHandler<UpdateClientRequest, UpdateClientResult> {
@@ -72,7 +76,19 @@ public class UpdateClientActivity implements RequestHandler<UpdateClientRequest,
                 logNote.setClientId(updateClientRequest.getId());
                 logNote.setNote(logNote.getNote());
                 logNote.setAction(logNote.getAction());
-                logNote.setNoteDateTime(LocalDateTime.now());
+
+                //Set Date and Time
+                ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneOffset.UTC);
+                ZonedDateTime pacificDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("America/Los_Angeles"));
+
+                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                String date = pacificDateTime.format(dateFormat);
+                //Set Log Note Date
+                logNote.setDate(date);
+
+                DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String time = pacificDateTime.format(timeFormat);
+                logNote.setTime(time);
 
                 logNotesLinkedList.addFirst(logNote);
 
@@ -83,7 +99,18 @@ public class UpdateClientActivity implements RequestHandler<UpdateClientRequest,
                 logNote.setClientId(updateClientRequest.getId());
                 logNote.setNote(logNote.getNote());
                 logNote.setAction(logNote.getAction());
-                logNote.setNoteDateTime(LocalDateTime.now());
+
+                ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneOffset.UTC);
+                ZonedDateTime pacificDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("America/Los_Angeles"));
+
+                DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                String date = pacificDateTime.format(dateFormat);
+                //Set Log Note Date
+                logNote.setDate(date);
+
+                DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String time = pacificDateTime.format(timeFormat);
+                logNote.setTime(time);
 
                 client.getLogNotes().addFirst(logNote);
             }
