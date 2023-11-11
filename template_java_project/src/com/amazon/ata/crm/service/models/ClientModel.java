@@ -3,9 +3,11 @@ package com.amazon.ata.crm.service.models;
 import com.amazon.ata.crm.service.dynamodb.models.LogNote;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+//TODO - Do I need to have List<LogNote> logNotes included in this builder?
 public class ClientModel {
 
     private String id;
@@ -15,7 +17,7 @@ public class ClientModel {
     private String phone;
     private String email;
     private String textBox;
-    private List<LogNote> logNotes = new ArrayList<>();
+    private LinkedList<LogNote> logNotes;
 
     public ClientModel() {}
 
@@ -86,11 +88,11 @@ public class ClientModel {
         this.textBox = textBox;
     }
 
-    public List<LogNote> getLogNotes() {
+    public LinkedList<LogNote> getLogNotes() {
         return logNotes;
     }
 
-    public void setLogNotes(List<LogNote> logNotes) {
+    public void setLogNotes(LinkedList<LogNote> logNotes) {
         this.logNotes = logNotes;
     }
 
@@ -131,7 +133,7 @@ public class ClientModel {
         private String phone;
         private String email;
         private String textBox;
-        private List<LogNote> logNotes = new ArrayList<>();
+        private LinkedList<LogNote> logNotes;
 
         public Builder withId (String idToUse) {
             this.id = idToUse;
@@ -168,7 +170,7 @@ public class ClientModel {
             return this;
         }
 
-        public Builder withLogNotes (List<LogNote> logNotesToUse) {
+        public Builder withLogNotes (LinkedList<LogNote> logNotesToUse) {
             this.logNotes = logNotesToUse;
             return this;
         }

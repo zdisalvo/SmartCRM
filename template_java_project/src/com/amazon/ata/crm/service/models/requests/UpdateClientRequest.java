@@ -2,6 +2,7 @@ package com.amazon.ata.crm.service.models.requests;
 
 import com.amazon.ata.crm.service.dynamodb.models.LogNote;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ public class UpdateClientRequest {
     private String phone;
     private String email;
     private String textBox;
-    private List<LogNote> logNotes;
+    private LinkedList<LogNote> logNotes;
 
     public UpdateClientRequest() {
 
@@ -88,11 +89,11 @@ public class UpdateClientRequest {
         this.textBox = textBox;
     }
 
-    public List<LogNote> getLogNotes() {
+    public LinkedList<LogNote> getLogNotes() {
         return logNotes;
     }
 
-    public void setLogNotes(List<LogNote> logNotes) {
+    public void setLogNotes(LinkedList<LogNote> logNotes) {
         this.logNotes = logNotes;
     }
 
@@ -131,7 +132,7 @@ public class UpdateClientRequest {
         private String phone;
         private String email;
         private String textBox;
-        private List<LogNote> logNotes;
+        private LinkedList<LogNote> logNotes;
 
 
         private Builder() {
@@ -173,7 +174,7 @@ public class UpdateClientRequest {
             return this;
         }
 
-        public UpdateClientRequest.Builder withLogNotes(List<LogNote> logNotesToUse) {
+        public UpdateClientRequest.Builder withLogNotes(LinkedList<LogNote> logNotesToUse) {
             this.logNotes = logNotesToUse;
             return this;
         }

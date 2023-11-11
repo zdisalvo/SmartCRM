@@ -14,6 +14,9 @@ public class LogNote {
     private String note;
     private LocalDateTime noteDateTime;
 
+    public LogNote() {
+    }
+
     @DynamoDBHashKey(attributeName = "clientId")
     public String getClientId() {
         return clientId;

@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 
 public class UpdateClientActivity implements RequestHandler<UpdateClientRequest, UpdateClientResult> {
 
@@ -59,15 +60,33 @@ public class UpdateClientActivity implements RequestHandler<UpdateClientRequest,
         if (updateClientRequest.getTextBox() != null) {
             client.setTextBox(updateClientRequest.getTextBox());
         }
+        //create a Linked List to add new log note first
+        LinkedList<LogNote> logNotesLinkedList = new LinkedList<>();
+
         if (updateClientRequest.getLogNotes() != null) {
-            LogNote logNote = new LogNote();
 
-            logNote.setClientId(updateClientRequest.getId());
-            logNote.setNote(logNote.getNote());
-            logNote.setAction(logNote.getAction());
-            logNote.setNoteDateTime(LocalDateTime.now());
+            if (client.getLogNotes() == null) {
 
-            client.getLogNotes().add(logNote);
+                LogNote logNote = new LogNote();
+
+                logNote.setClientId(updateClientRequest.getId());
+                logNote.setNote(logNote.getNote());
+                logNote.setAction(logNote.getAction());
+                logNote.setNoteDateTime(LocalDateTime.now());
+
+                logNotesLinkedList.addFirst(logNote);
+
+                client.setLogNotes(logNotesLinkedList);
+            } else {
+                LogNote logNote = new LogNote();
+
+                logNote.setClientId(updateClientRequest.getId());
+                logNote.setNote(logNote.getNote());
+                logNote.setAction(logNote.getAction());
+                logNote.setNoteDateTime(LocalDateTime.now());
+
+                client.getLogNotes().addFirst(logNote);
+            }
         }
 
         ClientModel clientModel = new ModelConverter().toClientModel(client);

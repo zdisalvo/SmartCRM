@@ -1,0 +1,51 @@
+//package com.amazon.ata.crm.service.converters;
+//
+//import com.amazon.ata.crm.service.dynamodb.models.LogNote;
+//import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperFieldModel;
+//import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMappingException;
+//import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
+//import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+//import com.fasterxml.jackson.core.JsonProcessingException;
+//import com.fasterxml.jackson.core.type.TypeReference;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//
+//import java.io.IOException;
+//import java.util.Map;
+//
+//public class ObjectConverter<T extends Object>
+//        implements DynamoDBTypeConverter<String, T> {
+//
+//    ObjectMapper objectMapper = new ObjectMapper();
+//
+//    @Override
+//    public String convert(T object) {
+//        try {
+//            return objectMapper.writeValueAsString(object);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        throw new IllegalArgumentException("Unable to parse JSON");
+//    }
+//
+//    @Override
+//    public T unconvert(final Map<String, AttributeValue> object) {
+//        final T result = DeclaringReflect.<T>newInstance(LogNote.class);
+//        if (!object.isEmpty()) {
+//            for (final DynamoDBMapperFieldModel<T,Object> field : fields()) {
+//                try {
+//                    final AttributeValue value = object.get(field.name());
+//                    if (value != null) {
+//                        field.unconvertAndSet(result, value);
+//                    }
+//                } catch (final RuntimeException e) {
+//                    throw new DynamoDBMappingException(
+//                            targetType.getSimpleName() + "[" + field.name() + "]; could not unconvert attribute", e
+//                    );
+//                }
+//            }
+//        }
+//        return result;
+//    }
+//}

@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 
 public class CreateLogNoteActivity implements RequestHandler<CreateLogNoteRequest, CreateLogNoteResult> {
 
@@ -46,7 +47,17 @@ public class CreateLogNoteActivity implements RequestHandler<CreateLogNoteReques
         logNote.setAction(createLogNoteRequest.getAction());
         logNote.setNoteDateTime(LocalDateTime.now());
 
-        client.getLogNotes().add(logNote);
+        LinkedList<LogNote> logNotesLinkedList = new LinkedList<>();
+
+        if (client.getLogNotes() == null) {
+
+            logNotesLinkedList.addFirst(logNote);
+            client.setLogNotes(logNotesLinkedList);
+
+        } else {
+
+            client.getLogNotes().addFirst(logNote);
+        }
 
         //ClientModel clientModel = new ModelConverter().toClientModel(client);
 
