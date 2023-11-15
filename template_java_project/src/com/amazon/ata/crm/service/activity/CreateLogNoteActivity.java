@@ -3,6 +3,7 @@ package com.amazon.ata.crm.service.activity;
 import com.amazon.ata.crm.service.converters.LogNoteModelConverter;
 import com.amazon.ata.crm.service.converters.ModelConverter;
 import com.amazon.ata.crm.service.dynamodb.ClientDao;
+import com.amazon.ata.crm.service.dynamodb.LogNoteDao;
 import com.amazon.ata.crm.service.dynamodb.models.Client;
 import com.amazon.ata.crm.service.dynamodb.models.LogNote;
 import com.amazon.ata.crm.service.models.ClientModel;
@@ -33,11 +34,13 @@ public class CreateLogNoteActivity implements RequestHandler<CreateLogNoteReques
     private final Logger log = LogManager.getLogger();
 
     private final ClientDao clientDao;
+    private final LogNoteDao logNoteDao;
 
 
     @Inject
-    public CreateLogNoteActivity(ClientDao clientDao) {
+    public CreateLogNoteActivity(ClientDao clientDao, LogNoteDao logNoteDao) {
         this.clientDao = clientDao;
+        this.logNoteDao = logNoteDao;
     }
 
     @Override
@@ -75,11 +78,16 @@ public class CreateLogNoteActivity implements RequestHandler<CreateLogNoteReques
             client.getLogNotes().addFirst(logNote);
         }
 
-        //ClientModel clientModel = new ModelConverter().toClientModel(client);
+        clientDao.saveClient(client);
+
+        ClientModel clientModel = new ModelConverter().toClientModel(client);
 
         LogNoteModel logNoteModel = new LogNoteModelConverter().toLogNoteModel(logNote);
 
-        clientDao.saveClient(client);
+
+
+        logNoteDao.saveLogNote(logNote);
+
 
         return CreateLogNoteResult.builder()
                 .withLogNote(logNoteModel)
