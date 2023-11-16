@@ -3,8 +3,10 @@ package com.amazon.ata.crm.service.activity;
 import com.amazon.ata.crm.service.converters.ModelConverter;
 import com.amazon.ata.crm.service.dynamodb.ClientDao;
 import com.amazon.ata.crm.service.dynamodb.models.Client;
+import com.amazon.ata.crm.service.dynamodb.models.LogNote;
 import com.amazon.ata.crm.service.dynamodb.models.User;
 import com.amazon.ata.crm.service.exceptions.InvalidAttributeException;
+import com.amazon.ata.crm.service.models.Action;
 import com.amazon.ata.crm.service.models.ClientModel;
 import com.amazon.ata.crm.service.models.requests.CreateClientRequest;
 import com.amazon.ata.crm.service.models.results.CreateClientResult;
@@ -19,6 +21,11 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 import java.util.Map;
 
 
@@ -91,6 +98,32 @@ public class CreateClientActivity implements RequestHandler<CreateClientRequest,
         client.setId(clientId);
 
         client.setTextBox("");
+
+        //Add client created logNote
+        LogNote logNote = new LogNote();
+
+        logNote.setClientId(clientId);
+
+        logNote.setAction(Action.CREATED);
+
+        logNote.setNote("Client created");
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneOffset.UTC);
+        ZonedDateTime pacificDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("America/Los_Angeles"));
+
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String date = pacificDateTime.format(dateFormat);
+        //Set Log Note Date
+        logNote.setDate(date);
+
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String time = pacificDateTime.format(timeFormat);
+        logNote.setTime(time);
+
+        LinkedList<LogNote> logNotesLinkedList = new LinkedList<>();
+
+        logNotesLinkedList.addFirst(logNote);
+        client.setLogNotes(logNotesLinkedList);
 
         ClientModel clientModel = new ModelConverter().toClientModel(client);
 
