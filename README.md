@@ -1,43 +1,199 @@
-# Learn and Be Curious Project Files
+# zdisalvo Design Document
 
-Welcome to your Learn and Be Curious Project Repository! As you already know, Learn and Be Curious is a unique experience from your other sprints here at Bloomtech. The most significant difference is that instead of being given a partially built project with mastery tasks that you need to complete, you will be creating a project from scratch, putting it onto AWS, and presenting your work.
+## 1. Problem Statement 
 
-We strongly recommend you review this repository's contents before you do any serious planning. Inside, you will find project requirements, templates, and guides that will help you get off to a great start. The requirements for your project are high-level by design. Your project should be unique and something you would be proud to share with others. 
-  
-## How to Use this Repository
+A CRM - Customer Relationship Manager, is an open interactive database that allows sales teams and customer facing entities to track their relationships and interactions with customers and prospects. The goal is to maximize efficiency for customer capture rate by giving the user tools to know when to call and email, what was talked about last, and where the relationship is in the pipeline. Most CRM’s are useful and effective but are highly complex and require an involved learning curve for the user to acquire the competence to utilize the dozens of features and nuances. The goal with this CRM is simplicity, limiting the ranges of steps and leaving more up to automation to get the job done.
 
-All project files that you use should be inside this repository. If you're working on a team, all team members should have access to the same repository so you can share your files in one place.
+## 2. Top Questions to Resolve in Review
 
-As we mentioned above, we first recommend becoming familiar with the contents of this repository. If you have questions about the requirements of this project, feel free to reach out to the instructor to get any clarification.
+1. Should there be a separate database for each user/manager's client numbers?
 
-We've included a template Java project and webpages. Feel free to use these examples as references as you build out your own project.
+2. How to implement the sending email interface that logs the email in the CRM
 
-## Deadlines
+## 3. Use Cases
 
-All project deadlines can be found in the [rubric](project_documents/rubric.md).
-  
-## What Files are in This Repository?
+U1. As a user I want to add a new customer with four simple data pieces, Name, Company (if applicable), email, and phone number. This should be attained prior to talking to the customer or at least on the first interaction.
 
-#### [Design Document](project_documents/design_document.md)
+U2. Call logging. As a customer I want a simple list of drop downs for the action taken. I want a large area to type out the specs of what was talked about. I want a “next step” field that tells me and a superior what the next action will be. If none is specified, the system will default to a phone call in one week, at the same time.
 
-The design document is what you need to complete before you start coding. This document lays out what you will be building and how you will build it, and the more you put into it, the easier your implementation will be.
+U3. As a user, I want my email to integrate with the CRM so that I can send an email from the CRM which will log the entire email chain.
 
-#### [Project Rubric](project_documents/rubric.md)
+U4. As a user, I want my technical software to sync up with the CRM to eliminate double tracking.
 
-The rubric contains the requirements for your project. You will fill out the rubric to show that your project successfully covers all the requirements.
+U5. As a user I want the manager to be able to have access to all leads on their team and reassign as necessary
 
-#### [Final Presentation Outline](project_documents/final_presentation_outline.pdf)
+U6. As I user I want to be able to sort by next follow up, last time called, first name, last name, company.
 
-This outline lays out what we expect to see in your final presentation. The outline is more of a guideline, so feel free to do things in a different order and put your style on your presentation. 
+U7. As a user, I want a fluid priority action list that updates based on scheduled follow ups, type of lead,
 
-#### [Accomplishment Tracking](project_documents/accomplishment_tracking_template.md)
+U8. As a user, I want to be able to search for a customer by phone number, first name, last name, and company
 
-We encourage you to keep track of your accomplishments throughout your time in Learn and Be Curious. This experience will give you plenty to share during interviews, and having accomplishments written down will help you remember highlights you can share.
+U9. As a user, I want to be able to update any information about a customer.
 
-#### [Team Charter](project_documents/team_charter.md)
+U10. As a user I want to log in with my username and password and have access to the clients I own, and if I am a manger, all leads my team owns.
 
-If you are working with a team, you must complete a team charter. This document will establish team norms and expectations, such as how you should communicate your work, how the team will create deadlines, what each person wants to get out of this experience, etc. Building your team charter will help your team work more effectively throughout this project.
+U11. As a user/manager I want to view all clients I have access to and be able to sort by all fields. I want to see a preview of the last comment made and last action taken.
 
-#### [Reflection](project_documents/reflection.md)
+U12. As a user/manager I want to be able to write notes in a text box and have some of those items populated as attributes of the client
 
-You will complete your reflection in Canvas, but feel free to see what questions we may ask here.
+U13. Wish. As a customer, I want to be able to create data type fields in a large text box, because every potential client / client is different. If a user types Birthday:, Birthday will be a data attribute, then anything comes after is recorded until a “/” slash. If there is no slash, everything will be stored until the next word that contains a colon. The data fields will be organized in alphabetical order when the user uses the get client feature, except for the main data fields, Name, Company, Phone, Email.
+
+
+
+## 4. Project Scope
+
+### 4.1 In Scope
+
+* Creating a customer
+* Manager, Individual lead access
+* Email integration into CRM
+* Call logging
+* Simple interface
+
+### 4.2 Out of Scope
+
+* Integration with company’s technical software
+
+
+## 5. Proposed Architecture Overview
+
+This initial iteration will provide the minimum lovable product (MLP) including creating a customer, getting a customer, updating a customer, sending an email from the CRM.
+
+We will use API Gateway and Lambda to create seven endpoints. (`CreateClient`, `GetClient`, `UpdateClient`, `EmailClient`, `ReassignClient` (Manager Only), `CreateUser`, `CreateManager`,
+
+We will store clients, users, and managers in separate tables in DynamoDB
+
+Clients will be assigned to Users and Managers in a List
+
+## 6. API
+
+### 6.1 Public Models
+
+```
+// Client Model
+
+String firstName
+String lastName
+String company
+String phone
+String email
+String textbox
+String clientId
+Date logDate
+Enum logAction
+String logComments
+Date nextActionDate
+Enum nextAction
+String userAssigned (Key Value Pairs: user / id)
+String managerAssigned (Key Value Pairs: user / id)
+```
+
+```
+// User Model
+
+String firstName
+String lastName
+String phone
+String email
+String Employee Id (Starts with U)
+```
+
+```
+// Manager Model
+
+String firstName
+String lastName
+String phone
+String email
+String Employee Id (Starts with M)
+```
+
+### 6.2 Create Client Endpoint
+
+* Accept a POST request to /clients
+* Accepts data to create a client with a first name, last name, company (if applicable), phone, and email. Returns the client including a unique client ID assigned to the CRM service
+* Client name format validation mechanism
+* Client phone format mechanism - phone number will carry 10 digits, plus extension if applicable
+
+![](project_documents/images/official_design_document/create_clientsd.png)
+
+### 6.3. Get Client Endpoint
+
+* Accept a GET request to /clients
+* Accepts a client ID or phone number, returns a client
+* Accepts a first name or last name and returns a list of clients that match which the user or manager owns. The client can be selected which will take them to the client page.
+* If the client is not found a message stating that no clients matched will be returned to the user.
+* Multiple results can be returned that match the query, user can select a client to access
+
+![](project_documents/images/official_design_document/get_clientsd.png)
+
+
+### 6.4 Update Client Endpoint
+
+* Accept a PUT request to /clients
+* Accepts a client ID only and updates the client phone number, email, and the text box which carries information about the client
+
+![](project_documents/images/official_design_document/update_clientsd.png)
+
+### 6.5 Create User/Manager Endpoint
+
+* Accepts a POST request to /users
+* Accepts data to create a user with first name, last name, phone, email, a sequential user id will be assigned. Returns the user including the newly assigned id
+
+### 6.6 Reassign Clients Endpoint
+
+* Accepts a PUT request to /clients to change the owner of the client to a different user id
+
+### 6.7 Client Interface
+
+* Users can access all of their assigned clients and create clients
+* Users can log the action taken (call, email), and make comments about what transpired
+* Users can sort clients in the interface by all attributes
+* Users can log extensive notes in a text box
+
+## 7. Tables
+
+### 7.1 clients
+
+```
+id // partition key, string
+firstName // string
+lastName // string
+company // string
+phone // string
+email // string
+clientId // string
+logDate // date
+logAction // enum
+logComments // string
+nextActionDate // date
+nextAction // enum
+userAssigned (id) // string
+managerAssigned (id) // string
+```
+
+### 7.2 users (managers included, and their id numbers will begin with an “M’, users will have a U start to their id)
+
+```
+id // partition key, string
+userName // string
+firstName // string
+lastName // string
+company // string
+phone // string
+email // string
+```
+
+![Home Page](/project_documents/HomePage.png)
+
+![Create User Page](project_documents/CreateUserPage.png)
+
+![Create Client Page](project_documents/CreateClientPage.png)
+
+![Get Client Page](project_documents/GetClientPage.png)
+
+![Client Interface](project_documents/ClientInterface.png)
+
+![Individual Client Page](project_documents/IndividualClientPage.png)
+
+
